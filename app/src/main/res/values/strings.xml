@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Planner</string>
+
+    <string name="choose_day">Выберите день в календаре, чтобы увидеть список дел</string>
+    <string name="slot_is_free">Временной слот свободен</string>
+    <string name="delete">Удалить</string>
+    <string name="task_list_for_date">Список дел на выбранную дату (%1$s):</string>
 </resources>
