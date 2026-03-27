@@ -1,4 +1,4 @@
-package io.alron.planner.ui.theme
+package io.alron.planner.presentation.theme
 
 import androidx.compose.ui.graphics.Color
 

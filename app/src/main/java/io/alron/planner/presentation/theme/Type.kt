@@ -1,4 +1,4 @@
-package io.alron.planner.ui.theme
+package io.alron.planner.presentation.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
