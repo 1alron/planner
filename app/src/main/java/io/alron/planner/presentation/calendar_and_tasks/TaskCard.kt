@@ -22,9 +22,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import io.alron.planner.R
+import io.alron.planner.domain.Task
 
 @Composable
 fun TaskCard(
+    task: Task,
+    onDelete: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Card(
@@ -32,8 +35,9 @@ fun TaskCard(
             .fillMaxSize()
             .clickable { },
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.tertiaryContainer
+            containerColor = MaterialTheme.colorScheme.primaryContainer
         ),
+        elevation = CardDefaults.cardElevation(4.dp),
         shape = RoundedCornerShape(12.dp)
     ) {
         Row(
@@ -46,14 +50,14 @@ fun TaskCard(
                 modifier = Modifier.weight(1f)
             ) {
                 Text(
-                    text = "Пример задачи",
+                    text = task.name,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                     style = MaterialTheme.typography.bodyMedium
                 )
             }
 
-            IconButton(onClick = { }) {
+            IconButton(onClick = onDelete) {
                 Icon(
                     imageVector = Icons.Default.Delete,
                     contentDescription = stringResource(R.string.delete),

@@ -11,15 +11,24 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import io.alron.planner.R
+import io.alron.planner.domain.Task
 import java.util.Locale
 
 @Composable
-fun TimeAndTaskItem(hour: Int) {
+fun TimeAndTaskItem(
+    hour: Int,
+    task: Task?,
+    duration: Int,
+    onDelete: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     Row(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
-            .height(72.dp)
+            .height((72 * duration).dp)
             .padding(vertical = 4.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -29,12 +38,19 @@ fun TimeAndTaskItem(hour: Int) {
                 Locale.forLanguageTag("ru-RU"),
                 "%02d:00 - %02d:00",
                 hour,
-                hour + 1
+                hour + duration
             ),
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             style = MaterialTheme.typography.bodyMedium
         )
         Spacer(Modifier.width(12.dp))
-        TaskCard()
+        if (task != null) {
+            TaskCard(task = task, onDelete = onDelete)
+        } else {
+            Text(
+                text = stringResource(R.string.empty_slot),
+                style = MaterialTheme.typography.bodyMedium
+            )
+        }
     }
 }
