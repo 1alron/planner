@@ -27,13 +27,14 @@ import io.alron.planner.domain.Task
 @Composable
 fun TaskCard(
     task: Task,
+    onClick: () -> Unit,
     onDelete: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Card(
         modifier = modifier
             .fillMaxSize()
-            .clickable { },
+            .clickable { onClick() },
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.primaryContainer
         ),

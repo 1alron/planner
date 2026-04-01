@@ -35,7 +35,10 @@ import io.github.boguszpawlowski.composecalendar.rememberSelectableCalendarState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CalendarAndTasksScreen(modifier: Modifier = Modifier) {
+fun CalendarAndTasksScreen(
+    onTaskClick: (Int) -> Unit,
+    modifier: Modifier = Modifier
+) {
     val calendarState = rememberSelectableCalendarState()
     val selectedDate = calendarState.selectionState.selection.firstOrNull()
 
@@ -95,7 +98,7 @@ fun CalendarAndTasksScreen(modifier: Modifier = Modifier) {
                 .padding(innerPadding)
                 .verticalScroll(rememberScrollState())
         ) {
-            CalendarAndTasksTopBar()
+            CalendarAndTasksTopBar(modifier = Modifier.padding(top = 16.dp))
             Spacer(Modifier.height(8.dp))
             Column(
                 modifier = Modifier
@@ -122,6 +125,7 @@ fun CalendarAndTasksScreen(modifier: Modifier = Modifier) {
                             is SlotState.Content -> {
                                 slotsState.slots.forEach { slot ->
                                     TimeAndTaskItem(
+                                        onTaskClick = { onTaskClick(slot.task?.id ?: 0) },
                                         hour = slot.hour,
                                         task = slot.task,
                                         duration = slot.duration,

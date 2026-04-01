@@ -1,6 +1,8 @@
 package io.alron.planner.presentation.util
 
+import java.time.Instant
 import java.time.LocalDate
+import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 
@@ -13,3 +15,12 @@ fun LocalDate.toRuFormat(): String = this.format(
         Locale.forLanguageTag("ru-RU")
     )
 )
+
+fun Long.toRuFormat(): String {
+    val formatter = DateTimeFormatter.ofPattern(
+        "dd.MM.yyyy HH:mm",
+        Locale.forLanguageTag("ru-RU")
+    )
+        .withZone(ZoneId.systemDefault())
+    return formatter.format(Instant.ofEpochMilli(this))
+}
