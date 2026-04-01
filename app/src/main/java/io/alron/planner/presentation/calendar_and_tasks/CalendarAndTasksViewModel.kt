@@ -7,7 +7,6 @@ import io.alron.planner.domain.Task
 import io.alron.planner.domain.TaskRepository
 import io.alron.planner.presentation.util.WORKING_FINISH_HOUR
 import io.alron.planner.presentation.util.WORKING_START_HOUR
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -18,7 +17,6 @@ import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
 import javax.inject.Inject
-import kotlin.time.Duration.Companion.seconds
 
 @HiltViewModel
 class CalendarAndTasksViewModel @Inject constructor(

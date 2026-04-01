@@ -2,8 +2,6 @@ package io.alron.planner.di
 
 import android.app.Application
 import androidx.room.Room
-import androidx.room.RoomDatabase
-import androidx.sqlite.db.SupportSQLiteDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -13,8 +11,6 @@ import io.alron.planner.data.local.TaskDao
 import io.alron.planner.data.local.TaskDatabase
 import io.alron.planner.data.local.TaskDatabaseCallback
 import io.alron.planner.domain.TaskRepository
-import java.time.LocalDate
-import java.time.ZoneId
 import javax.inject.Singleton
 
 @Module
