@@ -9,6 +9,7 @@
     <string name="empty_slot">Пустой слот</string>
     <string name="add_task">Добавить задачу</string>
     <string name="task_is_deleted">Задача удалена</string>
+    <string name="task_is_added">Задача добавлена</string>">
 
     <string name="date_with_formatting">Дата: %1$s</string>
     <string name="new_task">Новая задача</string>
@@ -17,4 +18,7 @@
     <string name="choose_date">Выбрать дату</string>
     <string name="name">Название</string>
     <string name="description">Описание</string>
+
+    <string name="previous_month">Предыдущий месяц</string>
+    <string name="next_month">Следующий месяц</string>
 </resources>

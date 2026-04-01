@@ -1,17 +1,28 @@
 package io.alron.planner.presentation.calendar_and_tasks
 
 import android.widget.Toast
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowForward
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
@@ -24,6 +35,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -52,7 +64,7 @@ fun CalendarAndTasksScreen(modifier: Modifier = Modifier) {
         }
     }
 
-    LaunchedEffect(selectedDate, viewModel) {
+    LaunchedEffect(selectedDate) {
         viewModel.events.collect { event ->
             when (event) {
                 is CalendarAndTasksEvent.TaskAdded -> {
@@ -60,14 +72,24 @@ fun CalendarAndTasksScreen(modifier: Modifier = Modifier) {
                     if (event.date == selectedDate) {
                         viewModel.loadTasks(selectedDate)
                     }
+                    Toast.makeText(
+                        context, context.getString(R.string.task_is_added),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
 
                 CalendarAndTasksEvent.TaskDeleted -> {
-                    Toast.makeText(context, "Задача удалена", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        context, context.getString(R.string.task_is_deleted),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
 
                 is CalendarAndTasksEvent.Error -> {
-                    Toast.makeText(context, event.message, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        context, event.message,
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         }
@@ -86,13 +108,13 @@ fun CalendarAndTasksScreen(modifier: Modifier = Modifier) {
                 .padding(innerPadding)
                 .verticalScroll(rememberScrollState())
         ) {
+            CalendarAndTasksTopBar()
+            Spacer(Modifier.height(8.dp))
             Column(
                 modifier = Modifier
                     .padding(12.dp)
             ) {
-                SelectableCalendar(
-                    calendarState = calendarState
-                )
+                CustomCalendar(calendarState)
                 Spacer(Modifier.height(28.dp))
                 when (selectedDate) {
                     null -> Text(
@@ -124,9 +146,11 @@ fun CalendarAndTasksScreen(modifier: Modifier = Modifier) {
                                     )
                                 }
                             }
+
                             is SlotState.Error -> {
                                 Text(slotsState.message)
                             }
+
                             SlotState.Loading -> {
                                 Box(
                                     modifier = Modifier
@@ -147,7 +171,11 @@ fun CalendarAndTasksScreen(modifier: Modifier = Modifier) {
                         AddTaskSheetContent(
                             onAdd = { name, desc, taskDate, start, end ->
                                 viewModel.addTask(
-                                    name, desc, taskDate, start, end
+                                    name,
+                                    desc,
+                                    taskDate,
+                                    start,
+                                    end
                                 )
                             }
                         )

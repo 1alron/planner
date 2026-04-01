@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -55,23 +56,20 @@ fun AddTaskSheetContent(
             style = MaterialTheme.typography.titleLarge
         )
         Spacer(Modifier.height(12.dp))
-
-        TextField(
+        OutlinedTextField(
             value = name,
             onValueChange = { name = it },
             label = { Text(stringResource(R.string.name)) },
             modifier = Modifier.fillMaxWidth()
         )
         Spacer(Modifier.height(8.dp))
-
-        TextField(
+        OutlinedTextField(
             value = description,
             onValueChange = { description = it },
             label = { Text(stringResource(R.string.description)) },
             modifier = Modifier.fillMaxWidth()
         )
         Spacer(Modifier.height(8.dp))
-
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(stringResource(R.string.date_with_formatting, date.toRuFormat()))
             Spacer(Modifier.width(12.dp))
@@ -91,33 +89,30 @@ fun AddTaskSheetContent(
             )
         }
         Spacer(Modifier.height(8.dp))
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            HourDropdown(
+                label = stringResource(R.string.start),
+                selectedHour = startHour,
+                hours = hours,
+                maxHour = WORKING_FINISH_HOUR - 1,
+                onHourSelected = { h ->
+                    startHour = h
+                    if (endHour <= startHour) endHour =
+                        (startHour + 1).coerceAtMost(WORKING_FINISH_HOUR)
+                },
+            )
 
-        HourDropdown(
-            label = stringResource(R.string.start),
-            selectedHour = startHour,
-            hours = hours,
-            maxHour = WORKING_FINISH_HOUR - 1,
-            onHourSelected = { h ->
-                startHour = h
-                if (endHour <= startHour) endHour =
-                    (startHour + 1).coerceAtMost(WORKING_FINISH_HOUR)
-            },
-            modifier = Modifier.fillMaxWidth()
-        )
+            Spacer(Modifier.width(8.dp))
 
-        Spacer(Modifier.height(8.dp))
-
-        HourDropdown(
-            label = stringResource(R.string.finish),
-            selectedHour = endHour,
-            hours = hours,
-            minHour = startHour + 1,
-            onHourSelected = { h -> endHour = h },
-            modifier = Modifier.fillMaxWidth()
-        )
-
+            HourDropdown(
+                label = stringResource(R.string.finish),
+                selectedHour = endHour,
+                hours = hours,
+                minHour = startHour + 1,
+                onHourSelected = { h -> endHour = h },
+            )
+        }
         Spacer(Modifier.height(16.dp))
-
         AddTaskSheetButton(
             onClick = {
                 onAdd(
