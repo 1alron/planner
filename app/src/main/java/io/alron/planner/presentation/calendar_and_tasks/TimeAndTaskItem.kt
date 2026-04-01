@@ -19,6 +19,7 @@ import java.util.Locale
 
 @Composable
 fun TimeAndTaskItem(
+    onTaskClick: () -> Unit,
     hour: Int,
     task: Task?,
     duration: Int,
@@ -45,7 +46,7 @@ fun TimeAndTaskItem(
         )
         Spacer(Modifier.width(12.dp))
         if (task != null) {
-            TaskCard(task = task, onDelete = onDelete)
+            TaskCard(task = task, onDelete = onDelete, onClick = onTaskClick)
         } else {
             Text(
                 text = stringResource(R.string.empty_slot),
