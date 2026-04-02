@@ -24,17 +24,23 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import io.alron.planner.R
+import io.alron.planner.presentation.util.DAYS_OF_WEEK
 import io.github.boguszpawlowski.composecalendar.CalendarState
 import io.github.boguszpawlowski.composecalendar.SelectableCalendar
 import io.github.boguszpawlowski.composecalendar.selection.DynamicSelectionState
+import kotlinx.datetime.DayOfWeek
+import java.time.format.TextStyle
+import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CustomCalendar(calendarState: CalendarState<DynamicSelectionState>) {
     SelectableCalendar(
         calendarState = calendarState,
+        firstDayOfWeek = DayOfWeek.MONDAY,
         monthHeader = {
             Row(
                 modifier = Modifier
@@ -56,7 +62,12 @@ fun CustomCalendar(calendarState: CalendarState<DynamicSelectionState>) {
                 }
 
                 Text(
-                    text = "${calendarState.monthState.currentMonth.month} " +
+                    text = "${
+                        calendarState.monthState.currentMonth.month.getDisplayName(
+                            TextStyle.FULL_STANDALONE,
+                            Locale.forLanguageTag("ru")
+                        ).uppercase()
+                    } " +
                             "${calendarState.monthState.currentMonth.year}",
                     style = MaterialTheme.typography.titleMedium,
                     color = MaterialTheme.colorScheme.onBackground
@@ -71,6 +82,26 @@ fun CustomCalendar(calendarState: CalendarState<DynamicSelectionState>) {
                     Icon(
                         Icons.AutoMirrored.Filled.ArrowForward,
                         contentDescription = stringResource(R.string.next_month)
+                    )
+                }
+            }
+        },
+
+        daysOfWeekHeader = {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                DAYS_OF_WEEK.forEach { day ->
+                    Text(
+                        text = day.getDisplayName(
+                            TextStyle.SHORT,
+                            Locale.forLanguageTag("ru")
+                        ),
+                        modifier = Modifier.weight(1f),
+                        textAlign = TextAlign.Center,
+                        color = MaterialTheme.colorScheme.onBackground,
+                        style = MaterialTheme.typography.labelMedium
                     )
                 }
             }

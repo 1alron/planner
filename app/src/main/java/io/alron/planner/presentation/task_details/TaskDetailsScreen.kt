@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -31,7 +33,11 @@ fun TaskDetailsScreen(
     }
 
     Surface(modifier = modifier.fillMaxSize()) {
-        Column {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+        ) {
             TaskDetailsToolbar(
                 onBackClick = onBackClick,
                 modifier = Modifier.padding(top = 12.dp)
@@ -39,7 +45,7 @@ fun TaskDetailsScreen(
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(horizontal = 12.dp)
+                    .padding(horizontal = 16.dp)
             ) {
                 Spacer(Modifier.height(20.dp))
                 when (state) {

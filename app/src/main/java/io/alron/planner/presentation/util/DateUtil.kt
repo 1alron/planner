@@ -1,5 +1,6 @@
 package io.alron.planner.presentation.util
 
+import java.time.DayOfWeek
 import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
@@ -8,6 +9,16 @@ import java.util.Locale
 
 const val WORKING_START_HOUR = 8
 const val WORKING_FINISH_HOUR = 21
+
+val DAYS_OF_WEEK = listOf(
+    DayOfWeek.MONDAY,
+    DayOfWeek.TUESDAY,
+    DayOfWeek.WEDNESDAY,
+    DayOfWeek.THURSDAY,
+    DayOfWeek.FRIDAY,
+    DayOfWeek.SATURDAY,
+    DayOfWeek.SUNDAY
+)
 
 fun LocalDate.toRuFormat(): String = this.format(
     DateTimeFormatter.ofPattern(
